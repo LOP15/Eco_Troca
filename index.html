@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTroca - Sistema de Reciclagem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url('https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        header {
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            background: #3d8b40;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        input, select {
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            width: 100%;
+            transition: border 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1), 0 0 8px rgba(76, 175, 80, 0.6);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+        tbody tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.02);
+        }
+        .hidden {
+            display: none;
+        }
+        .tab-content {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌳 EcoTroca - Recicle e Ganhe Pontos 🌱</h1>
+        <p>Ajude o planeta e seja recompensado</p>
+    </header>
+    
+    <div class="container">
+        <div id="nav-buttons">
+            <button class="btn" onclick="showTab('login')">Login</button>
+            <button class="btn" onclick="showTab('cadastro')">Cadastro</button>
+            <button class="btn" onclick="showTab('reciclar')" id="btn-reciclar" style="display:none">Reciclar</button>
+            <button class="btn" onclick="showTab('pontos')" id="btn-pontos" style="display:none">Meus Pontos</button>
+            <button class="btn" onclick="showTab('precos')" id="btn-precos">Tabela de Preços</button>
+            <button class="btn" onclick="logout()" id="btn-logout" style="display:none">Sair</button>
+        </div>
+        
+        <!-- Tela de Login -->
+        <div id="login" class="tab-content active">
+            <h2>Login</h2>
+            <input type="email" id="login-email" placeholder="Email">
+            <input type="password" id="login-senha" placeholder="Senha">
+            <button class="btn" onclick="fazerLogin()">Entrar</button>
+        </div>
+        
+        <!-- Tela de Cadastro -->
+        <div id="cadastro" class="tab-content">
+            <h2>Cadastro de Usuário</h2>
+            <input type="text" id="nome" placeholder="Nome completo">
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="senha" placeholder="Senha">
+            <button class="btn" onclick="cadastrarUsuario()">Cadastrar</button>
+        </div>
+        
+        <!-- Tela de Reciclagem -->
+        <div id="reciclar" class="tab-content">
+            <h2>Registrar Reciclagem</h2>
+            
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin: 20px 0;">
+                <div style="flex: 1; min-width: 120px; text-align: center; margin: 10px; padding: 15px; border-radius: 8px; background: rgba(76, 175, 80, 0.1); cursor: pointer;" onclick="document.getElementById('tipo-material').value='plastico'">
+                    <img src="https://via.placeholder.com/60/4CAF50/FFFFFF?text=♻️" alt="Plástico" style="border-radius: 50%; padding: 10px;">
+                    <p><strong>Plástico</strong></p>
+                    <p>2 pontos/kg</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; text-align: center; margin: 10px; padding: 15px; border-radius: 8px; background: rgba(76, 175, 80, 0.1); cursor: pointer;" onclick="document.getElementById('tipo-material').value='papel'">
+                    <img src="https://via.placeholder.com/60/8bc34a/FFFFFF?text=📄" alt="Papel" style="border-radius: 50%; padding: 10px;">
+                    <p><strong>Papel</strong></p>
+                    <p>1 ponto/kg</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; text-align: center; margin: 10px; padding: 15px; border-radius: 8px; background: rgba(76, 175, 80, 0.1); cursor: pointer;" onclick="document.getElementById('tipo-material').value='vidro'">
+                    <img src="https://via.placeholder.com/60/2196F3/FFFFFF?text=🍶" alt="Vidro" style="border-radius: 50%; padding: 10px;">
+                    <p><strong>Vidro</strong></p>
+                    <p>3 pontos/kg</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; text-align: center; margin: 10px; padding: 15px; border-radius: 8px; background: rgba(76, 175, 80, 0.1); cursor: pointer;" onclick="document.getElementById('tipo-material').value='metal'">
+                    <img src="https://via.placeholder.com/60/9E9E9E/FFFFFF?text=📎" alt="Metal" style="border-radius: 50%; padding: 10px;">
+                    <p><strong>Metal</strong></p>
+                    <p>5 pontos/kg</p>
+                </div>
+            </div>
+            
+            <select id="tipo-material">
+                <option value="">Selecione o material</option>
+                <option value="plastico">Plástico (2 pontos/kg)</option>
+                <option value="papel">Papel (1 ponto/kg)</option>
+                <option value="vidro">Vidro (3 pontos/kg)</option>
+                <option value="metal">Metal (5 pontos/kg)</option>
+            </select>
+            <input type="number" id="quantidade" placeholder="Quantidade em kg" min="0.1" step="0.1">
+            <button class="btn" onclick="registrarReciclagem()" style="background: #4CAF50; width: 100%; margin-top: 15px; padding: 15px; font-size: 1.1em;">♻️ Registrar Reciclagem</button>
+        </div>
+        
+        <!-- Tela de Pontos -->
+        <div id="pontos" class="tab-content">
+            <h2>Meus Pontos</h2>
+            <div id="total-pontos" style="text-align: center; margin: 20px 0; padding: 20px; border-radius: 10px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.2));">
+                <img src="https://via.placeholder.com/100/4CAF50/FFFFFF?text=🌱" alt="Badge Ecológico" style="border-radius: 50%; padding: 10px; margin-bottom: 10px;">
+                <h3>Total de Pontos: <span id="pontos-valor" style="font-size: 2em; color: #4CAF50; font-weight: bold;">0</span></h3>
+                <p><span id="arvores-salvas">0</span> árvores salvas com sua contribuição!</p>
+            </div>
+            
+            <div style="margin: 20px 0; padding: 10px; border-radius: 10px; background: rgba(76, 175, 80, 0.05); border-left: 4px solid #4CAF50;">
+                <p>🌎 Seu impacto positivo é importante! Cada item reciclado contribui para um planeta mais sustentável.</p>
+            </div>
+            
+            <h3>Histórico de Reciclagem</h3>
+            <table id="tabela-historico">
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Quantidade (kg)</th>
+                        <th>Pontos</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="historico-body">
+                    <!-- Dados serão inseridos aqui via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Tela de Preços dos Materiais -->
+        <div id="precos" class="tab-content">
+            <h2>Tabela de Preços Atualizados</h2>
+            
+            <div style="margin: 20px 0; padding: 15px; border-radius: 10px; background: rgba(76, 175, 80, 0.05); border-left: 4px solid #4CAF50;">
+                <p>📢 <strong>Última atualização:</strong> 08/05/2025</p>
+                <p>Os preços podem variar de acordo com a qualidade e limpeza dos materiais. Materiais mais limpos e bem separados têm maior valor de mercado.</p>
+            </div>
+            
+            <table id="tabela-precos">
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Tipo</th>
+                        <th>Valor por kg (R$)</th>
+                        <th>Pontos por kg</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🧴 Plástico</td>
+                        <td>PET (garrafas transparentes)</td>
+                        <td>R$ 2,50</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>🧴 Plástico</td>
+                        <td>PEAD (embalagens opacas)</td>
+                        <td>R$ 2,20</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>🧴 Plástico</td>
+                        <td>PP (embalagens de alimentos)</td>
+                        <td>R$ 1,80</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>📄 Papel</td>
+                        <td>Papelão</td>
+                        <td>R$ 0,60</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>📄 Papel</td>
+                        <td>Papel branco</td>
+                        <td>R$ 0,80</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>📄 Papel</td>
+                        <td>Jornal/Revista</td>
+                        <td>R$ 0,40</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>🍶 Vidro</td>
+                        <td>Vidro incolor</td>
+                        <td>R$ 0,30</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>🍶 Vidro</td>
+                        <td>Vidro colorido</td>
+                        <td>R$ 0,25</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>📎 Metal</td>
+                        <td>Alumínio (latinhas)</td>
+                        <td>R$ 7,50</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>📎 Metal</td>
+                        <td>Cobre</td>
+                        <td>R$ 38,00</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>📎 Metal</td>
+                        <td>Aço inox</td>
+                        <td>R$ 5,20</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>📎 Metal</td>
+                        <td>Ferro</td>
+                        <td>R$ 0,90</td>
+                        <td>5</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin: 30px 0; padding: 20px; border-radius: 10px; background: rgba(76, 175, 80, 0.1); text-align: center;">
+                <h3>Dicas para Maximizar o Valor dos Seus Recicláveis</h3>
+                <ul style="text-align: left; list-style-type: none; padding: 10px;">
+                    <li style="margin: 10px 0;">✅ Lave as embalagens para remover resíduos</li>
+                    <li style="margin: 10px 0;">✅ Separe os materiais por tipo</li>
+                    <li style="margin: 10px 0;">✅ Compacte itens volumosos como garrafas e latas</li>
+                    <li style="margin: 10px 0;">✅ Remova rótulos e tampas quando possível</li>
+                    <li style="margin: 10px 0;">✅ Mantenha os materiais secos e limpos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulação de banco de dados local
+        let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+        let usuarioAtual = JSON.parse(localStorage.getItem('usuarioAtual')) || null;
+        
+        // Verificar se há usuário logado
+        window.onload = function() {
+            if (usuarioAtual) {
+                mostrarTelaUsuarioLogado();
+            }
+        }
+        
+        // Funções para navegação entre telas
+        function showTab(tabId) {
+            // Esconde todas as tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostra a tab selecionada
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        // Função de cadastro
+        function cadastrarUsuario() {
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            
+            if (!nome || !email || !senha) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            
+            // Verifica se o email já está cadastrado
+            if (usuarios.some(user => user.email === email)) {
+                alert('Este email já está cadastrado!');
+                return;
+            }
+            
+            // Cria novo usuário
+            const novoUsuario = {
+                id: Date.now().toString(),
+                nome,
+                email,
+                senha,
+                pontos: 0,
+                historico: []
+            };
+            
+            // Adiciona ao "banco de dados"
+            usuarios.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            
+            alert('Cadastro realizado com sucesso!');
+            // Limpa campos
+            document.getElementById('nome').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('senha').value = '';
+            // Vai para tela de login
+            showTab('login');
+        }
+        
+        // Função de login
+        function fazerLogin() {
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
+            
+            if (!email || !senha) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            
+            // Verifica credenciais
+            const usuario = usuarios.find(user => user.email === email && user.senha === senha);
+            
+            if (usuario) {
+                // Salva usuário atual
+                usuarioAtual = usuario;
+                localStorage.setItem('usuarioAtual', JSON.stringify(usuarioAtual));
+                
+                mostrarTelaUsuarioLogado();
+                atualizarPontos();
+            } else {
+                alert('Email ou senha incorretos!');
+            }
+        }
+        
+        // Função de logout
+        function logout() {
+            usuarioAtual = null;
+            localStorage.removeItem('usuarioAtual');
+            
+            // Esconde botões de usuário logado
+            document.getElementById('btn-reciclar').style.display = 'none';
+            document.getElementById('btn-pontos').style.display = 'none';
+            document.getElementById('btn-logout').style.display = 'none';
+            
+            // Mostra botões de login e cadastro
+            document.querySelector('button[onclick="showTab(\'login\')"]').style.display = 'inline-block';
+            document.querySelector('button[onclick="showTab(\'cadastro\')"]').style.display = 'inline-block';
+            
+            // O botão de preços permanece visível
+            
+            // Mostra tab de login
+            showTab('login');
+        }
+        
+        // Função para mostrar interface de usuário logado
+        function mostrarTelaUsuarioLogado() {
+            // Exibe botões de usuário logado
+            document.getElementById('btn-reciclar').style.display = 'inline-block';
+            document.getElementById('btn-pontos').style.display = 'inline-block';
+            document.getElementById('btn-logout').style.display = 'inline-block';
+            
+            // Esconde botões de login e cadastro
+            document.querySelector('button[onclick="showTab(\'login\')"]').style.display = 'none';
+            document.querySelector('button[onclick="showTab(\'cadastro\')"]').style.display = 'none';
+            
+            // O botão de preços permanece visível
+            
+            // Mostra tela de reciclagem
+            showTab('reciclar');
+        }
+        
+        // Função para registrar item reciclado
+        function registrarReciclagem() {
+            if (!usuarioAtual) {
+                alert('Você precisa fazer login primeiro!');
+                showTab('login');
+                return;
+            }
+            
+            const tipoMaterial = document.getElementById('tipo-material').value;
+            const quantidade = parseFloat(document.getElementById('quantidade').value);
+            
+            if (!tipoMaterial || !quantidade || quantidade <= 0) {
+                alert('Preencha todos os campos corretamente!');
+                return;
+            }
+            
+            // Calcula pontos baseado no tipo de material
+            let pontos = 0;
+            switch (tipoMaterial) {
+                case 'plastico':
+                    pontos = quantidade * 2;
+                    break;
+                case 'papel':
+                    pontos = quantidade * 1;
+                    break;
+                case 'vidro':
+                    pontos = quantidade * 3;
+                    break;
+                case 'metal':
+                    pontos = quantidade * 5;
+                    break;
+            }
+            
+            // Arredonda para 1 casa decimal
+            pontos = Math.round(pontos * 10) / 10;
+            
+            // Registra no histórico
+            const novaEntrada = {
+                material: tipoMaterial,
+                quantidade: quantidade,
+                pontos: pontos,
+                data: new Date().toLocaleDateString()
+            };
+            
+            // Encontra o usuário correto no array
+            const index = usuarios.findIndex(user => user.id === usuarioAtual.id);
+            if (index !== -1) {
+                // Adiciona ao histórico
+                usuarios[index].historico.push(novaEntrada);
+                // Atualiza pontos
+                usuarios[index].pontos += pontos;
+                // Atualiza usuário atual
+                usuarioAtual = usuarios[index];
+                
+                // Salva alterações
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+                localStorage.setItem('usuarioAtual', JSON.stringify(usuarioAtual));
+                
+                alert(`Reciclagem registrada! Você ganhou ${pontos} pontos.`);
+                
+                // Limpa campos
+                document.getElementById('tipo-material').value = '';
+                document.getElementById('quantidade').value = '';
+                
+                // Vai para tela de pontos
+                showTab('pontos');
+                atualizarPontos();
+            }
+        }
+        
+        // Função para atualizar a exibição de pontos
+        function atualizarPontos() {
+            if (!usuarioAtual) return;
+            
+            // Atualiza total de pontos
+            document.getElementById('pontos-valor').textContent = usuarioAtual.pontos;
+            
+            // Calcula estimativa de árvores salvas (1 árvore para cada 20 pontos)
+            const arvoresSalvas = Math.floor(usuarioAtual.pontos / 20);
+            document.getElementById('arvores-salvas').textContent = arvoresSalvas;
+            
+            // Limpa tabela
+            const tabelaBody = document.getElementById('historico-body');
+            tabelaBody.innerHTML = '';
+            
+            // Adiciona entradas do histórico à tabela
+            usuarioAtual.historico.forEach(item => {
+                const row = document.createElement('tr');
+                
+                // Formata nome do material
+                let materialNome = item.material;
+                let icone = '';
+                switch (item.material) {
+                    case 'plastico': 
+                        materialNome = 'Plástico'; 
+                        icone = '🧴'; 
+                        break;
+                    case 'papel': 
+                        materialNome = 'Papel'; 
+                        icone = '📄'; 
+                        break;
+                    case 'vidro': 
+                        materialNome = 'Vidro'; 
+                        icone = '🍶'; 
+                        break;
+                    case 'metal': 
+                        materialNome = 'Metal'; 
+                        icone = '📎'; 
+                        break;
+                }
+                
+                row.innerHTML = `
+                    <td>${icone} ${materialNome}</td>
+                    <td>${item.quantidade} kg</td>
+                    <td>${item.pontos}</td>
+                    <td>${item.data}</td>
+                `;
+                
+                tabelaBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
