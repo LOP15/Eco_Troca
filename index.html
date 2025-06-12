@@ -3,54 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoTroca - Sistema de Reciclagem SP</title>
+    <title>EcoTroca - Sistema de Reciclagem</title>
     <style>
-        :root {
-            --primary: #2E7D32;
-            --secondary: #4CAF50;
-            --accent: #66BB6A;
-            --warm: #FFC107;
-            --orange: #FF9800;
-        }
-
-        * { box-sizing: border-box; }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 50%, #A5D6A7 100%);
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 25%, #66BB6A 50%, #81C784 75%, #A5D6A7 100%);
             min-height: 100vh;
-            position: relative;
+            animation: bgShift 15s ease-in-out infinite;
         }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(46, 125, 50, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(139, 195, 74, 0.1) 0%, transparent 50%);
-            z-index: -1;
-            animation: floatingBg 15s ease-in-out infinite;
+        
+        @keyframes bgShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
-
-        @keyframes floatingBg {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
+        
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);
             color: white;
-            padding: 2rem 1rem;
+            padding: 2rem;
             text-align: center;
-            box-shadow: 0 8px 32px rgba(46, 125, 50, 0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
         }
-
+        
         header::before {
             content: "";
             position: absolute;
@@ -58,490 +36,476 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: shimmer 8s linear infinite;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
+            animation: float 20s linear infinite;
         }
-
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        @keyframes float {
+            0% { transform: translateX(-50px) translateY(-50px); }
+            100% { transform: translateX(50px) translateY(50px); }
         }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
+        
+        h1 { font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); z-index: 1; position: relative; }
+        
         .container {
-            width: 90%;
             max-width: 1200px;
             margin: 20px auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
+            background: rgba(255,255,255,0.95);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(46, 125, 50, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
             backdrop-filter: blur(10px);
         }
-
-        #nav-buttons {
+        
+        .nav-buttons {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 30px;
+            background: linear-gradient(90deg, #4CAF50, #66BB6A);
+            overflow-x: auto;
         }
-
+        
         .btn {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            background: transparent;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
+            padding: 15px 25px;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-            font-weight: 600;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            white-space: nowrap;
+            flex: 1;
+            position: relative;
+        }
+        
+        .btn:hover, .btn.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .hero {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
             position: relative;
             overflow: hidden;
         }
-
-        .btn::before {
-            content: "";
+        
+        .hero::before {
+            content: "🌿";
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
+            font-size: 100px;
+            opacity: 0.1;
+            top: 10px;
+            right: 20px;
+            animation: sway 6s ease-in-out infinite;
         }
-
-        .btn:hover::before { left: 100%; }
-        .btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
         }
-
-        input, select {
-            padding: 15px 20px;
-            margin: 10px 0;
-            border: 2px solid #E0E0E0;
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #F1F8E9, #DCEDC8);
+            padding: 25px;
             border-radius: 15px;
-            width: 100%;
+            text-align: center;
             transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
+            border: 2px solid transparent;
+            cursor: pointer;
         }
-
+        
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #4CAF50;
+            box-shadow: 0 15px 30px rgba(76,175,80,0.3);
+        }
+        
+        .icon { font-size: 3rem; margin-bottom: 15px; }
+        
+        .material-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .material-card {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .material-card:hover, .material-card.selected {
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            border-color: #2E7D32;
+            transform: scale(1.05);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #C8E6C9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #F9FBE7, #F1F8E9);
+        }
+        
         input:focus, select:focus {
-            border-color: var(--secondary);
             outline: none;
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76,175,80,0.2);
             transform: translateY(-2px);
         }
-
+        
+        .calc-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #4CAF50, #66BB6A, #4CAF50);
+            background-size: 200% 200%;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .calc-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(76,175,80,0.4);
+        }
+        
+        .result {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            border-left: 5px solid #4CAF50;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .value { font-size: 2rem; color: #2E7D32; font-weight: bold; }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(46, 125, 50, 0.1);
-        }
-
+        
         th {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
             color: white;
-            font-weight: 600;
+            padding: 15px;
+            font-weight: bold;
         }
-
-        tr:hover {
-            background: linear-gradient(90deg, rgba(76, 175, 80, 0.05), rgba(129, 199, 132, 0.05));
-            transform: scale(1.01);
-            transition: all 0.3s ease;
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #E0E0E0;
+            background: rgba(248,255,248,0.8);
+            transition: background 0.3s ease;
         }
-
-        .hidden { display: none; }
-        .tab-content { display: none; animation: fadeIn 0.5s ease-in-out; }
-        .active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(129, 199, 132, 0.15));
-            border-radius: 20px;
-            padding: 40px;
-            margin: 30px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: "🌿";
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 3rem;
-            opacity: 0.3;
-            animation: leafFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes leafFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(232, 245, 233, 0.7));
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(129, 199, 132, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            animation: iconBounce 2s ease-in-out infinite;
-        }
-
-        @keyframes iconBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .material-selector {
+        
+        tr:hover td { background: rgba(200,230,201,0.3); }
+        
+        .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin: 30px 0;
         }
-
-        .material-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(232, 245, 233, 0.8));
+        
+        .stat {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
             padding: 25px;
-            border-radius: 20px;
+            border-radius: 15px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
-            border: 2px solid transparent;
+            border-left: 5px solid #4CAF50;
         }
-
-        .material-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            border-color: var(--secondary);
-            box-shadow: 0 15px 35px rgba(76, 175, 80, 0.3);
-        }
-
-        .material-card .icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            animation: materialFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes materialFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .calculator-result {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            color: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            margin: 30px 0;
-            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.3);
-            transform: scale(0);
-            opacity: 0;
-            transition: all 0.5s ease;
-        }
-
-        .calculator-result.show {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .value-display {
-            font-size: 3rem;
+        
+        .stat-number {
+            font-size: 2.5rem;
             font-weight: bold;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: valueGlow 2s ease-in-out infinite alternate;
+            color: #2E7D32;
+            display: block;
         }
-
-        @keyframes valueGlow {
-            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-            to { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5); }
-        }
-
+        
+        .hidden { display: none !important; }
+        
         @media (max-width: 768px) {
-            .container { width: 95%; padding: 20px; }
-            header h1 { font-size: 2rem; }
-            .material-selector { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-            .feature-grid { grid-template-columns: 1fr; }
-            #nav-buttons { flex-direction: column; align-items: center; }
-            .btn { width: 200px; }
+            .nav-buttons { flex-direction: column; }
+            .content { padding: 20px; }
+            h1 { font-size: 2rem; }
+            .material-selector { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>🌳 EcoTroca - Reciclagem SP 🌱</h1>
-        <p>Preços atualizados da região de São Paulo</p>
+        <h1>🌳 EcoTroca - Recicle com Propósito 🌱</h1>
+        <p>Conectando você ao mercado de reciclagem sustentável</p>
     </header>
     
     <div class="container">
-        <div id="nav-buttons">
-            <button class="btn" onclick="showTab('home')">🏠 Início</button>
-            <button class="btn" onclick="showTab('reciclar')">🧮 Calculadora</button>
-            <button class="btn" onclick="showTab('precos')">💰 Preços SP</button>
-            <button class="btn" onclick="showTab('sobre')">🏢 Sobre</button>
+        <div class="nav-buttons">
+            <button class="btn active" onclick="showTab('home')">🏠 Início</button>
+            <button class="btn" onclick="showTab('calc')">🧮 Calculadora</button>
+            <button class="btn" onclick="showTab('prices')">💰 Preços</button>
+            <button class="btn" onclick="showTab('about')">ℹ️ Sobre</button>
         </div>
         
-        <!-- Tela Inicial -->
-        <div id="home" class="tab-content active">
-            <div class="hero-section">
-                <h2>🌍 Reciclagem Inteligente em São Paulo</h2>
-                <p style="font-size: 1.3em; margin: 25px 0;">Descubra o valor real dos seus materiais recicláveis baseado nos preços atuais da Grande São Paulo.</p>
-                <button class="btn" onclick="showTab('reciclar')" style="font-size: 1.2em; padding: 18px 35px;">♻️ Calcular Valor</button>
-            </div>
-            
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Preços SP Atualizados</h3>
-                    <p>Valores baseados no mercado da Grande São Paulo, atualizados mensalmente.</p>
+        <div class="content">
+            <!-- HOME -->
+            <div id="home" class="tab-content active">
+                <div class="hero">
+                    <h2>🌍 Transformando Resíduos em Recursos</h2>
+                    <p>A EcoTroca é sua plataforma completa para informações sobre reciclagem.</p>
+                    <button class="calc-btn" onclick="showTab('calc')" style="margin-top: 20px;">♻️ Calcular Valor</button>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧮</div>
-                    <h3>Cálculo Preciso</h3>
-                    <p>Calculadora que considera qualidade e tipo específico do material.</p>
+                
+                <div class="grid">
+                    <div class="card">
+                        <div class="icon">📊</div>
+                        <h3>Preços Atualizados</h3>
+                        <p>Consulte valores atuais dos materiais recicláveis.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🧮</div>
+                        <h3>Calculadora</h3>
+                        <p>Calcule o valor dos seus materiais rapidamente.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🌱</div>
+                        <h3>Sustentabilidade</h3>
+                        <p>Contribua para um planeta mais verde.</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌱</div>
-                    <h3>Impacto Verde</h3>
-                    <p>Contribua para um planeta mais sustentável e ainda ganhe dinheiro.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Calculadora -->
-        <div id="reciclar" class="tab-content">
-            <h2>💰 Calculadora de Valor - São Paulo</h2>
-            
-            <div class="material-selector">
-                <div class="material-card" onclick="selectMaterial('plastico')">
-                    <div class="icon">🧴</div>
-                    <h4>Plástico</h4>
-                    <p><strong>R$ 1,50 - R$ 4,20/kg</strong></p>
-                </div>
-                <div class="material-card" onclick="selectMaterial('papel')">
-                    <div class="icon">📄</div>
-                    <h4>Papel</h4>
-                    <p><strong>R$ 0,40 - R$ 0,80/kg</strong></p>
-                </div>
-                <div class="material-card" onclick="selectMaterial('vidro')">
-                    <div class="icon">🍶</div>
-                    <h4>Vidro</h4>
-                    <p><strong>R$ 0,30 - R$ 0,65/kg</strong></p>
-                </div>
-                <div class="material-card" onclick="selectMaterial('metal')">
-                    <div class="icon">📎</div>
-                    <h4>Metal</h4>
-                    <p><strong>R$ 0,90 - R$ 35,00/kg</strong></p>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <p>Toneladas Recicladas</p>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">1,200</span>
+                        <p>Famílias Atendidas</p>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">25</span>
+                        <p>Árvores Preservadas</p>
+                    </div>
                 </div>
             </div>
             
-            <div style="background: rgba(255, 255, 255, 0.9); padding: 25px; border-radius: 15px;">
-                <select id="tipo-material" onchange="atualizarPreco()">
-                    <option value="">🔍 Selecione o material</option>
-                    <option value="plastico">🧴 Plástico</option>
-                    <option value="papel">📄 Papel</option>
-                    <option value="vidro">🍶 Vidro</option>
-                    <option value="metal">📎 Metal</option>
+            <!-- CALCULADORA -->
+            <div id="calc" class="tab-content">
+                <h2>💰 Calculadora de Valor</h2>
+                
+                <div class="material-selector">
+                    <div class="material-card" onclick="selectMaterial('plastico')">
+                        <div class="icon">🧴</div>
+                        <strong>Plástico</strong>
+                        <p>R$ 1,50-4,20/kg</p>
+                    </div>
+                    <div class="material-card" onclick="selectMaterial('papel')">
+                        <div class="icon">📄</div>
+                        <strong>Papel</strong>
+                        <p>R$ 0,40-0,80/kg</p>
+                    </div>
+                    <div class="material-card" onclick="selectMaterial('vidro')">
+                        <div class="icon">🍶</div>
+                        <strong>Vidro</strong>
+                        <p>R$ 0,30-0,65/kg</p>
+                    </div>
+                    <div class="material-card" onclick="selectMaterial('metal')">
+                        <div class="icon">🔩</div>
+                        <strong>Metal</strong>
+                        <p>R$ 0,90-38,00/kg</p>
+                    </div>
+                </div>
+                
+                <select id="subtipo" class="hidden">
+                    <option value="">Selecione o tipo específico</option>
                 </select>
                 
-                <select id="subtipo-material" style="display: none;" onchange="calcularValor()">
-                    <option value="">📋 Tipo específico</option>
-                </select>
+                <input type="number" id="quantidade" placeholder="Quantidade em kg" min="0.1" step="0.1">
                 
-                <input type="number" id="quantidade" placeholder="⚖️ Quantidade em kg" min="0.1" step="0.1" onchange="calcularValor()">
+                <button class="calc-btn" onclick="calcular()">💰 Calcular Valor</button>
                 
-                <button class="btn" onclick="calcularValor()" style="width: 100%; padding: 18px;">💰 Calcular</button>
+                <div id="resultado" class="result hidden">
+                    <h3>Valor Estimado</h3>
+                    <div class="value" id="valor">R$ 0,00</div>
+                    <p id="detalhes"></p>
+                </div>
             </div>
             
-            <div id="resultado-calculo" class="calculator-result">
-                <h3>💎 Valor Estimado</h3>
-                <div id="valor-estimado" class="value-display">R$ 0,00</div>
-                <p id="descricao-calculo"></p>
-                <small>💡 Preços podem variar conforme qualidade</small>
-            </div>
-        </div>
-        
-        <!-- Preços -->
-        <div id="precos" class="tab-content">
-            <h2>📊 Preços São Paulo - Junho 2025</h2>
-            
-            <div style="margin: 25px 0; padding: 20px; border-radius: 15px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(129, 199, 132, 0.1));">
-                <p>📍 <strong>Região:</strong> Grande São Paulo</p>
-                <p>📅 <strong>Última atualização:</strong> Junho 2025</p>
-            </div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Material</th>
-                        <th>Tipo</th>
-                        <th>Valor/kg (R$)</th>
-                        <th>Observações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>🧴 Plástico</td><td>PET transparente</td><td><strong>R$ 4,20</strong></td><td>Limpo, sem rótulo</td></tr>
-                    <tr><td>🧴 Plástico</td><td>PEAD opaco</td><td><strong>R$ 2,50</strong></td><td>Embalagens limpeza</td></tr>
-                    <tr><td>🧴 Plástico</td><td>PP (potes)</td><td><strong>R$ 1,80</strong></td><td>Potes, tampas</td></tr>
-                    <tr><td>🧴 Plástico</td><td>Filme/sacolas</td><td><strong>R$ 1,50</strong></td><td>Limpo e seco</td></tr>
-                    <tr><td>📄 Papel</td><td>Papel branco</td><td><strong>R$ 0,80</strong></td><td>Sem grampos</td></tr>
-                    <tr><td>📄 Papel</td><td>Papelão</td><td><strong>R$ 0,70</strong></td><td>Limpo e seco</td></tr>
-                    <tr><td>📄 Papel</td><td>Jornal/revista</td><td><strong>R$ 0,40</strong></td><td>Sem plástico</td></tr>
-                    <tr><td>🍶 Vidro</td><td>Transparente</td><td><strong>R$ 0,65</strong></td><td>Sem tampa</td></tr>
-                    <tr><td>🍶 Vidro</td><td>Âmbar</td><td><strong>R$ 0,60</strong></td><td>Garrafas cerveja</td></tr>
-                    <tr><td>🍶 Vidro</td><td>Verde</td><td><strong>R$ 0,30</strong></td><td>Garrafas vinho</td></tr>
-                    <tr><td>📎 Metal</td><td>Cobre</td><td><strong>R$ 30,00-35,00</strong></td><td>Fios limpos</td></tr>
-                    <tr><td>📎 Metal</td><td>Alumínio (latas)</td><td><strong>R$ 5,50</strong></td><td>Latas bebidas</td></tr>
-                    <tr><td>📎 Metal</td><td>Ferro/Aço</td><td><strong>R$ 0,90</strong></td><td>Sucata ferrosa</td></tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Sobre -->
-        <div id="sobre" class="tab-content">
-            <h2>🏢 Sobre a EcoTroca</h2>
-            <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(232, 245, 233, 0.7)); padding: 30px; border-radius: 20px;">
-                <p>A EcoTroca é uma plataforma dedicada a conectar pessoas ao mercado de reciclagem da Grande São Paulo, oferecendo informações precisas e atualizadas sobre preços de materiais recicláveis.</p>
+            <!-- PREÇOS -->
+            <div id="prices" class="tab-content">
+                <h2>📊 Tabela de Preços</h2>
                 
-                <h3>🎯 Nossa Missão</h3>
-                <p>Democratizar o acesso à informação sobre reciclagem, facilitando para que mais pessoas possam contribuir com o meio ambiente e ainda obter renda extra.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Tipo</th>
+                            <th>Valor/kg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>🧴 Plástico</td><td>PET transparente</td><td>R$ 4,20</td></tr>
+                        <tr><td>🧴 Plástico</td><td>PEAD opaco</td><td>R$ 2,50</td></tr>
+                        <tr><td>🧴 Plástico</td><td>PP alimentos</td><td>R$ 1,80</td></tr>
+                        <tr><td>🧴 Plástico</td><td>Filme/sacolas</td><td>R$ 1,50</td></tr>
+                        <tr><td>📄 Papel</td><td>Branco</td><td>R$ 0,70</td></tr>
+                        <tr><td>📄 Papel</td><td>Papelão</td><td>R$ 0,65</td></tr>
+                        <tr><td>📄 Papel</td><td>Cartão</td><td>R$ 0,54</td></tr>
+                        <tr><td>📄 Papel</td><td>Jornal/Revista</td><td>R$ 0,40</td></tr>
+                        <tr><td>🍶 Vidro</td><td>Transparente</td><td>R$ 0,65</td></tr>
+                        <tr><td>🍶 Vidro</td><td>Âmbar</td><td>R$ 0,65</td></tr>
+                        <tr><td>🍶 Vidro</td><td>Verde</td><td>R$ 0,30</td></tr>
+                        <tr><td>🔩 Metal</td><td>Cobre</td><td>R$ 31,50</td></tr>
+                        <tr><td>🔩 Metal</td><td>Alumínio</td><td>R$ 5,25</td></tr>
+                        <tr><td>🔩 Metal</td><td>Aço inox</td><td>R$ 5,20</td></tr>
+                        <tr><td>🔩 Metal</td><td>Ferro/Aço</td><td>R$ 0,90</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- SOBRE -->
+            <div id="about" class="tab-content">
+                <h2>🏢 Sobre a EcoTroca</h2>
                 
-                <h3>📞 Contato</h3>
-                <p>Email: contato@ecotroca.com.br<br>
-                Telefone: (11) 3456-7890<br>
-                São Paulo - SP</p>
+                <div class="hero">
+                    <h3>Nossa Missão</h3>
+                    <p>Democratizar o acesso à informação sobre reciclagem e conectar pessoas ao mercado sustentável.</p>
+                </div>
+                
+                <div class="grid">
+                    <div class="card">
+                        <div class="icon">🎯</div>
+                        <h3>Visão</h3>
+                        <p>Ser referência em reciclagem no Brasil.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">💚</div>
+                        <h3>Valores</h3>
+                        <p>Sustentabilidade, transparência e inovação.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Preços atualizados para São Paulo (junho 2025)
-        const precosSP = {
+        const materiais = {
             plastico: {
                 'PET transparente': 4.20,
                 'PEAD opaco': 2.50,
-                'PP (potes/tampas)': 1.80,
+                'PP alimentos': 1.80,
                 'Filme/sacolas': 1.50
             },
             papel: {
-                'Papel branco': 0.80,
-                'Papelão': 0.70,
-                'Jornal/revista': 0.40
+                'Branco': 0.70,
+                'Papelão': 0.65,
+                'Cartão': 0.54,
+                'Jornal/Revista': 0.40
             },
             vidro: {
-                'Vidro transparente': 0.65,
-                'Vidro âmbar': 0.60,
-                'Vidro verde': 0.30
+                'Transparente': 0.65,
+                'Âmbar': 0.65,
+                'Verde': 0.30
             },
             metal: {
-                'Cobre': 32.50,
-                'Alumínio (latas)': 5.50,
+                'Cobre': 31.50,
+                'Alumínio': 5.25,
+                'Aço inoxidável': 5.20,
                 'Ferro/Aço': 0.90
             }
         };
-
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.getElementById(tabName).classList.add('active');
+        
+        let materialSelecionado = '';
+        
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
         }
-
+        
         function selectMaterial(tipo) {
-            document.getElementById('tipo-material').value = tipo;
-            atualizarPreco();
-        }
-
-        function atualizarPreco() {
-            const tipo = document.getElementById('tipo-material').value;
-            const subtipoSelect = document.getElementById('subtipo-material');
+            materialSelecionado = tipo;
+            document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
             
-            if (!tipo) {
-                subtipoSelect.style.display = 'none';
-                return;
-            }
-
-            subtipoSelect.innerHTML = '<option value="">📋 Selecione o tipo específico</option>';
+            const subtipo = document.getElementById('subtipo');
+            subtipo.innerHTML = '<option value="">Selecione o tipo específico</option>';
             
-            Object.keys(precosSP[tipo]).forEach(subtipo => {
-                const option = document.createElement('option');
-                option.value = subtipo;
-                option.textContent = `${subtipo} - R$ ${precosSP[tipo][subtipo].toFixed(2)}/kg`;
-                subtipoSelect.appendChild(option);
+            Object.keys(materiais[tipo]).forEach(sub => {
+                const opt = document.createElement('option');
+                opt.value = sub;
+                opt.textContent = `${sub} - R$ ${materiais[tipo][sub].toFixed(2)}/kg`;
+                subtipo.appendChild(opt);
             });
             
-            subtipoSelect.style.display = 'block';
+            subtipo.classList.remove('hidden');
         }
-
-        function calcularValor() {
-            const tipo = document.getElementById('tipo-material').value;
-            const subtipo = document.getElementById('subtipo-material').value;
+        
+        function calcular() {
+            const subtipo = document.getElementById('subtipo').value;
             const quantidade = parseFloat(document.getElementById('quantidade').value);
             
-            if (!tipo || !subtipo || !quantidade || quantidade <= 0) {
-                document.getElementById('resultado-calculo').classList.remove('show');
+            if (!materialSelecionado || !subtipo || !quantidade || quantidade <= 0) {
+                alert('Preencha todos os campos!');
                 return;
             }
-
-            const precoKg = precosSP[tipo][subtipo];
-            const valorTotal = precoKg * quantidade;
             
-            document.getElementById('valor-estimado').textContent = `R$ ${valorTotal.toFixed(2)}`;
-            document.getElementById('descricao-calculo').textContent = 
-                `${quantidade}kg de ${subtipo} × R$ ${precoKg.toFixed(2)}/kg`;
+            const preco = materiais[materialSelecionado][subtipo];
+            const total = quantidade * preco;
             
-            document.getElementById('resultado-calculo').classList.add('show');
+            document.getElementById('valor').textContent = `R$ ${total.toFixed(2)}`;
+            document.getElementById('detalhes').textContent = 
+                `${quantidade} kg de ${subtipo} × R$ ${preco.toFixed(2)}/kg`;
+            document.getElementById('resultado').classList.remove('hidden');
         }
     </script>
 </body>
