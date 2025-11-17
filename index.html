@@ -1543,5 +1543,62 @@
             totalRecycled.textContent = newValue;
         }, 5000);
     </script>
+
+        <!-- Calculadora de Pontos -->
+        <section id="calculadora">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🧮 Calculadora de Pontos</h2>
+                    <button class="btn btn-outline btn-small" onclick="limparCalculadora()">🔄 Limpar</button>
+                </div>
+
+                <div class="grid grid-2">
+                    <div>
+                        <h3 style="color: #2E7D32; margin-bottom: 1rem;">Adicionar Itens</h3>
+                        <form onsubmit="adicionarItemCalculadora(event)" style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                            <div class="form-group">
+                                <label class="form-label">Tipo de Material</label>
+                                <select class="form-control" id="calcProduto" required>
+                                    <option value="">Escolha um material...</option>
+                                    <option value="plastico">♻️ Plástico</option>
+                                    <option value="papel">📄 Papel</option>
+                                    <option value="metal">🔩 Metal</option>
+                                    <option value="vidro">🍾 Vidro</option>
+                                    <option value="eletronico">💻 Eletrônico</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Quantidade (kg)</label>
+                                <input type="number" step="0.1" min="0.1" class="form-control" id="calcQuantidade" placeholder="Ex: 2.5" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">🧮 Calcular Pontos</button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #2E7D32; margin-bottom: 1rem;">Resumo do Cálculo</h3>
+                        <div style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; backdrop-filter: blur(10px); min-height: 200px;">
+                            <div id="calcItens" style="margin-bottom: 1rem; max-height: 250px; overflow-y: auto;">
+                                <p style="text-align: center; color: #999; padding: 2rem 0;">Nenhum item adicionado ainda</p>
+                            </div>
+                            <div style="border-top: 2px solid rgba(76,175,80,0.3); padding-top: 1rem; margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-weight: 600; color: #666;">Total de Peso:</span>
+                                    <span style="font-weight: bold; color: #2E7D32;" id="calcTotalPeso">0 kg</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(76,175,80,0.2), rgba(129,199,132,0.2)); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                    <span style="font-weight: 600; color: #2E7D32; font-size: 1.1rem;">Total de Pontos:</span>
+                                    <span style="font-weight: bold; color: #FF6B35; font-size: 1.5rem;" id="calcTotalPontos">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Produtos Recicláveis -->
+        <section id="produtos">
 </body>
 </html>
+
