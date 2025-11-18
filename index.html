@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco Troca Verde Tech - Plataforma Completa</title>
+    <title>Eco Troca Verde Tech - Portal Completo</title>
     <style>
+        /* Estilos base unificados */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -21,7 +22,9 @@
             min-height: 100vh;
         }
 
-        /* Header */
+        html { scroll-behavior: smooth; }
+
+        /* --- Header (Com base no Dashboard para melhor visibilidade e uso) --- */
         header {
             background: linear-gradient(135deg, rgba(45,134,89,0.95), rgba(76,175,80,0.9));
             color: white;
@@ -68,6 +71,7 @@
         }
         nav a:hover { color: #81C784; }
 
+        /* HAMBURGER (transforma em X) */
         .menu-toggle {
             display: none;
             width: 40px;
@@ -103,10 +107,12 @@
         .menu-toggle .bar::before { top: -7px; }
         .menu-toggle .bar::after { top: 7px; }
 
+        /* quando ativo, vira X */
         .menu-toggle.active .bar { transform: rotate(45deg); }
         .menu-toggle.active .bar::before { transform: rotate(90deg) translateX(0); top: 0; opacity: 0; }
         .menu-toggle.active .bar::after { transform: rotate(90deg) translateX(0); top: 0; opacity: 0; }
 
+        /* Mobile menu (aparece quando nav.nav-open) */
         nav.mobile-open ul {
             display: flex;
             flex-direction: column;
@@ -114,7 +120,7 @@
             position: absolute;
             right: 1rem;
             top: 56px;
-            background: linear-gradient(135deg, rgba(45,134,89,0.95), rgba(76,175,80,0.95));
+            background: linear-gradient(135deg, rgba(45,134,89,0.98), rgba(76,175,80,0.98));
             padding: 0.75rem 1rem;
             border-radius: 10px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.15);
@@ -126,14 +132,143 @@
 
         /* Container Principal */
         .main-container {
-            max-width: 1400px;
+            max-width: 1200px; /* Reduzindo de 1400px para alinhar com o menu */
             margin: 100px auto 20px;
             padding: 0 1.5rem;
         }
 
-        /* Cards Base - MAIS TRANSPARENTE */
+        /* --- Estilos Institucionais (novo.html) --- */
+        /* Hero Section (Apenas na Home) */
+        .hero {
+            background: linear-gradient(135deg, rgba(27,94,32,0.4), rgba(46,125,50,0.3), rgba(76,175,80,0.2));
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 2rem;
+            max-width:100%;
+            margin:0 auto;
+            border-radius:0;
+            box-shadow:none;
+            backdrop-filter:none;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute; inset:0;
+            background: rgba(0,0,0,0.3);
+            opacity: 0.8;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #81C784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-text p { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.95; animation: slideInLeft 1s ease-out 0.25s both; }
+
+        .cta-button { 
+            background: linear-gradient(45deg, #FF6B35, #F7931E); 
+            color: white; 
+            padding: 0.95rem 1.75rem; 
+            border: none; 
+            border-radius: 50px; 
+            font-size: 1.02rem; 
+            cursor: pointer; 
+            display: inline-flex; 
+            gap: .5rem; 
+            transition: all .25s ease; 
+        }
+
+        .hero-visual { display: flex; justify-content: center; align-items: center; animation: slideInRight 1s ease-out; }
+
+        .floating-icons { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; animation: float 6s ease-in-out infinite; width:100%; }
+        .icon-card { 
+            background: rgba(255,255,255,0.1); 
+            backdrop-filter: blur(10px); 
+            padding: 1.6rem; 
+            border-radius: 18px; 
+            text-align: center; 
+            border: 1px solid rgba(255,255,255,0.12); 
+            transition: transform .25s ease; 
+            min-width:120px; 
+        }
+        .icon-card:hover { transform: translateY(-8px); background: rgba(255,255,255,0.14); }
+        .icon-card .icon { font-size: 2.6rem; margin-bottom: 0.6rem; display:block; }
+
+        /* Sections (Institucionais) */
+        section { 
+            padding: 3.5rem 1.25rem; 
+            max-width:1200px; 
+            margin: 0 auto 1.5rem auto; 
+            background: rgba(255,255,255,0.95); 
+            border-radius: 14px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255,255,255,0.18); 
+        }
+        section#home.hero { background: transparent; box-shadow: none; backdrop-filter: none; border: none; margin:0; max-width:100%; border-radius:0; }
+
+        .section-title { text-align:center; margin-bottom:1.75rem; }
+        .section-title h2 { font-size:2.6rem; color:#2E7D32; position:relative; margin-bottom:.5rem; }
+        .section-title h2::after { content:''; position:absolute; bottom:-.5rem; left:50%; transform:translateX(-50%); width:90px; height:4px; background: linear-gradient(45deg,#4CAF50,#81C784); border-radius:2px; }
+
+        .about-content { display:grid; grid-template-columns: 1fr 1fr; gap: 2.25rem; align-items:center; }
+        .about-text { font-size:1.04rem; line-height:1.7; }
+        .about-stats { display:grid; grid-template-columns: repeat(2,1fr); gap:1rem; }
+        .stat-card-inst { 
+            text-align:center; 
+            padding:1.25rem; 
+            background: linear-gradient(135deg,#E8F5E8,#F1F8E9); 
+            border-radius:12px; 
+        } /* Renomeado para evitar conflito */
+        .stat-number-inst { font-size:2rem; font-weight:700; color:#2E7D32; display:block; } /* Renomeado */
+
+        .objectives-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:1rem; margin-top:1rem; }
+        .objective-card { background:white; padding:1rem; border-radius:12px; box-shadow: 0 5px 20px rgba(0,0,0,0.06); border-left: 5px solid #4CAF50; }
+
+        .team-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:1rem; margin-top:1rem; }
+        .team-card { background:white; padding:1rem; border-radius:12px; text-align:center; box-shadow: 0 5px 20px rgba(0,0,0,0.06); }
+        .avatar { width:64px; height:64px; border-radius:50%; background: linear-gradient(135deg,#4CAF50,#81C784); margin:0 auto 0.6rem; display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem; }
+
+        .contact-section { background: rgba(255,255,255,0.95) !important; padding:2.5rem 1rem; border-radius:12px; } /* Renomeado */
+        .contact-info { display:flex; justify-content:center; gap:1.25rem; flex-wrap:wrap; margin-top:1rem; }
+        .contact-item { display:flex; gap:.5rem; align-items:center; color:#2E7D32; }
+
+        footer { background: rgba(27,94,32,0.95); color:white; text-align:center; padding:1.5rem; margin:1rem auto 0; max-width:1200px; border-radius:12px; backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.08); }
+
+        /* --- Estilos do Dashboard (Projeto cadastro...) --- */
+        .main-container > section { 
+            padding: 3.5rem 1.25rem; 
+            max-width:1200px; 
+            margin: 0 auto 1.5rem auto; 
+            background: transparent; /* A seção Dashboard/Ranking não precisa ter background. O card terá. */
+            box-shadow: none; 
+            backdrop-filter: none;
+            border: none;
+        }
+
         .card {
-            background: rgba(255,255,255,0.65);
+            background: rgba(255,255,255,0.75); /* Aumentei um pouco a opacidade para legibilidade */
             border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -250,10 +385,7 @@
         }
 
         /* Sistema de Ranking */
-        .ranking-list {
-            list-style: none;
-        }
-
+        .ranking-list { list-style: none; }
         .ranking-item {
             display: flex;
             align-items: center;
@@ -265,66 +397,20 @@
             transition: transform 0.3s ease;
             backdrop-filter: blur(10px);
         }
-
-        .ranking-item:hover {
-            transform: translateX(5px);
-            background: rgba(255,255,255,0.8);
-        }
-
+        .ranking-item:hover { transform: translateX(5px); background: rgba(255,255,255,0.8); }
         .ranking-position {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-right: 1rem;
-            flex-shrink: 0;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem; margin-right: 1rem; flex-shrink: 0;
         }
-
-        .ranking-position.gold {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: white;
-        }
-
-        .ranking-position.silver {
-            background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
-            color: white;
-        }
-
-        .ranking-position.bronze {
-            background: linear-gradient(135deg, #CD7F32, #8B4513);
-            color: white;
-        }
-
-        .ranking-position.default {
-            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
-            color: #2E7D32;
-        }
-
-        .ranking-info {
-            flex: 1;
-        }
-
-        .ranking-name {
-            font-weight: 600;
-            color: #2E7D32;
-            margin-bottom: 0.25rem;
-        }
-
-        .ranking-points {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .ranking-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
+        .ranking-position.gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: white; }
+        .ranking-position.silver { background: linear-gradient(135deg, #C0C0C0, #A9A9A9); color: white; }
+        .ranking-position.bronze { background: linear-gradient(135deg, #CD7F32, #8B4513); color: white; }
+        .ranking-position.default { background: linear-gradient(135deg, #E8F5E8, #C8E6C9); color: #2E7D32; }
+        .ranking-info { flex: 1; }
+        .ranking-name { font-weight: 600; color: #2E7D32; margin-bottom: 0.25rem; }
+        .ranking-points { color: #666; font-size: 0.9rem; }
+        .ranking-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
 
         /* Sistema de Pontos */
         .points-display {
@@ -336,18 +422,8 @@
             margin-bottom: 2rem;
             backdrop-filter: blur(10px);
         }
-
-        .points-number {
-            font-size: 3.5rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .points-label {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
+        .points-number { font-size: 3.5rem; font-weight: bold; display: block; margin-bottom: 0.5rem; }
+        .points-label { font-size: 1.2rem; opacity: 0.9; }
 
         /* Cards de Recompensas */
         .reward-card {
@@ -359,30 +435,10 @@
             transition: transform 0.3s ease;
             backdrop-filter: blur(10px);
         }
-
-        .reward-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.9);
-        }
-
-        .reward-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .reward-title {
-            font-size: 1.2rem;
-            color: #2E7D32;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .reward-points {
-            color: #FF6B35;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
+        .reward-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.9); }
+        .reward-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .reward-title { font-size: 1.2rem; color: #2E7D32; margin-bottom: 0.5rem; font-weight: 600; }
+        .reward-points { color: #FF6B35; font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem; }
 
         /* Produtos */
         .product-card {
@@ -393,36 +449,15 @@
             transition: transform 0.3s ease;
             backdrop-filter: blur(10px);
         }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.9);
-        }
-
+        .product-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.9); }
         .product-image {
-            width: 100%;
-            height: 150px;
+            width: 100%; height: 150px;
             background: linear-gradient(135deg, rgba(232,245,232,0.5), rgba(200,230,201,0.5));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            backdrop-filter: blur(5px);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; margin-bottom: 1rem; backdrop-filter: blur(5px);
         }
-
-        .product-name {
-            font-weight: 600;
-            color: #2E7D32;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-value {
-            color: #FF6B35;
-            font-weight: bold;
-            margin-bottom: 0.75rem;
-        }
+        .product-name { font-weight: 600; color: #2E7D32; margin-bottom: 0.5rem; }
+        .product-value { color: #FF6B35; font-weight: bold; margin-bottom: 0.75rem; }
 
         /* Badges e Conquistas */
         .badge-grid {
@@ -430,488 +465,235 @@
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             gap: 1rem;
         }
-
         .badge-item {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255,255,255,0.6);
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-            backdrop-filter: blur(10px);
+            text-align: center; padding: 1rem; background: rgba(255,255,255,0.6);
+            border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease; backdrop-filter: blur(10px);
         }
-
-        .badge-item:hover {
-            transform: scale(1.05);
-            background: rgba(255,255,255,0.85);
-        }
-
+        .badge-item:hover { transform: scale(1.05); background: rgba(255,255,255,0.85); }
         .badge-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            filter: grayscale(0);
-            transition: filter 0.3s ease;
+            font-size: 2.5rem; margin-bottom: 0.5rem;
+            filter: grayscale(0); transition: filter 0.3s ease;
         }
+        .badge-item.locked .badge-icon { filter: grayscale(1); opacity: 0.4; }
+        .badge-name { color: #666; font-size: 0.85rem; }
 
-        .badge-item.locked .badge-icon {
-            filter: grayscale(1);
-            opacity: 0.4;
-        }
-
-        .badge-name {
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        /* Dashboard Stats - DESKTOP: 4 COLUNAS */
+        /* Dashboard Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-
-        .stat-card {
-            background: rgba(255,255,255,0.7);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-            transition: transform 0.3s ease;
-            backdrop-filter: blur(15px);
+        .stat-card-dash { /* Renomeado para evitar conflito */
+            background: rgba(255,255,255,0.7); padding: 1.5rem; border-radius: 12px;
+            text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease; backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.3);
         }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.9);
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #2E7D32;
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
+        .stat-card-dash:hover { transform: translateY(-5px); background: rgba(255,255,255,0.9); }
+        .stat-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .stat-number { font-size: 2rem; font-weight: bold; color: #2E7D32; display: block; margin-bottom: 0.25rem; }
+        .stat-label { color: #666; font-size: 0.9rem; }
 
         /* Tabs */
         .tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid rgba(232,245,232,0.5);
-            flex-wrap: wrap;
+            display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(232,245,232,0.5); flex-wrap: wrap;
         }
-
         .tab {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            color: #666;
-            font-weight: 500;
-            border-bottom: 3px solid transparent;
+            padding: 0.75rem 1.5rem; background: transparent; border: none; cursor: pointer;
+            color: #666; font-weight: 500; border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
         }
-
-        .tab.active {
-            color: #2E7D32;
-            border-bottom-color: #4CAF50;
-        }
-
-        .tab:hover {
-            color: #2E7D32;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+        .tab.active { color: #2E7D32; border-bottom-color: #4CAF50; }
+        .tab:hover { color: #2E7D32; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
 
         /* Perfil do Usuário */
         .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            padding: 2rem;
+            display: flex; align-items: center; gap: 2rem; padding: 2rem;
             background: linear-gradient(135deg, rgba(76,175,80,0.85), rgba(129,199,132,0.85));
-            color: white;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
+            color: white; border-radius: 16px; margin-bottom: 2rem; backdrop-filter: blur(10px);
         }
-
         .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            border: 5px solid rgba(255,255,255,0.3);
-            flex-shrink: 0;
+            width: 120px; height: 120px; border-radius: 50%;
+            background: white; display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; border: 5px solid rgba(255,255,255,0.3); flex-shrink: 0;
         }
-
-        .profile-info {
-            flex: 1;
-        }
-
-        .profile-info h2 {
-            margin-bottom: 0.5rem;
-        }
-
+        .profile-info { flex: 1; }
+        .profile-info h2 { margin-bottom: 0.5rem; }
         .profile-level {
-            background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 0.5rem;
+            background: rgba(255,255,255,0.2); padding: 0.5rem 1rem;
+            border-radius: 20px; display: inline-block; margin-top: 0.5rem;
         }
 
         /* Progress Bar */
         .progress-bar {
-            width: 100%;
-            height: 30px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-top: 1rem;
+            width: 100%; height: 30px; background: rgba(255,255,255,0.2);
+            border-radius: 15px; overflow: hidden; margin-top: 1rem;
         }
-
         .progress-fill {
-            height: 100%;
-            background: rgba(255,255,255,0.4);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
+            height: 100%; background: rgba(255,255,255,0.4);
+            border-radius: 15px; display: flex; align-items: center;
+            justify-content: center; color: white; font-weight: bold;
             transition: width 0.5s ease;
         }
 
         /* Modal */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            backdrop-filter: blur(5px);
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000; align-items: center;
+            justify-content: center; padding: 1rem; backdrop-filter: blur(5px);
         }
-
-        .modal.active {
-            display: flex;
-        }
-
+        .modal.active { display: flex; }
         .modal-content {
-            background: rgba(255,255,255,0.98);
-            border-radius: 16px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-            backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.98); border-radius: 16px; padding: 2rem;
+            max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;
+            animation: slideUp 0.3s ease; backdrop-filter: blur(20px);
         }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-header h2 {
-            color: #2E7D32;
-        }
-
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-header h2 { color: #2E7D32; }
         .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.3s ease;
+            background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;
+            width: 30px; height: 30px; display: flex; align-items: center;
+            justify-content: center; border-radius: 50%; transition: background 0.3s ease;
         }
-
-        .modal-close:hover {
-            background: #f5f5f5;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        .modal-close:hover { background: #f5f5f5; }
 
         /* Toast Notification */
         .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
+            position: fixed; bottom: 20px; right: 20px;
             background: linear-gradient(135deg, rgba(76,175,80,0.95), rgba(129,199,132,0.95));
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            z-index: 3000;
-            animation: slideInRight 0.3s ease;
-            display: none;
-            max-width: 300px;
-            backdrop-filter: blur(10px);
+            color: white; padding: 1rem 1.5rem; border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 3000;
+            animation: slideInRight 0.3s ease; display: none; max-width: 300px; backdrop-filter: blur(10px);
         }
-
-        .toast.active {
-            display: block;
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        .toast.active { display: block; }
 
         /* Tabela de Histórico */
-        .table-container {
-            overflow-x: auto;
-        }
-
+        .table-container { overflow-x: auto; }
         .table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255,255,255,0.6);
-            border-radius: 8px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
+            width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.6);
+            border-radius: 8px; overflow: hidden; backdrop-filter: blur(10px);
         }
-
-        .table th,
-        .table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(232,245,232,0.5);
+        .table th, .table td {
+            padding: 1rem; text-align: left; border-bottom: 1px solid rgba(232,245,232,0.5);
         }
-
         .table th {
             background: linear-gradient(135deg, rgba(232,245,232,0.7), rgba(200,230,201,0.7));
-            color: #2E7D32;
-            font-weight: 600;
+            color: #2E7D32; font-weight: 600;
         }
+        .table tr:hover { background: rgba(245,245,245,0.5); }
 
-        .table tr:hover {
-            background: rgba(245,245,245,0.5);
-        }
-
-        /* Responsive - MOBILE: 2x2 */
+        /* --- Estilos Responsive (Combinados) --- */
         @media (max-width: 768px) {
-            .menu-toggle { 
-                display: flex; 
-                align-items: center; 
-                justify-content: center; 
-                background: transparent; 
-                border: none; 
-            }
-            nav ul { display: none; }
+            .menu-toggle { display:flex; }
+            nav ul { display:none; }
+            
             .main-container { margin-top: 80px; padding: 0 1rem; }
+            header + section { padding-top: 5.2rem; } /* ajusta o topo da home */
+
+            /* Institucional */
+            .hero { padding: 5.5rem 0.75rem 2.5rem; }
+            .hero-content { grid-template-columns:1fr; text-align:center; gap:1.25rem; padding:0 1rem; }
+            .hero-text h1 { font-size:2rem; }
+            .hero-text p { font-size:1rem; }
+            .floating-icons { grid-template-columns: repeat(2,1fr); gap: .9rem; }
+            .icon-card { padding: 1rem; }
+            .icon-card .icon { font-size:1.9rem; }
+            .section-title h2 { font-size:1.8rem; }
+            .about-content { grid-template-columns:1fr; }
+            .about-stats { grid-template-columns:1fr; }
+            .objectives-grid { grid-template-columns:1fr; }
+            .team-grid { grid-template-columns:1fr; }
+            .contact-info { flex-direction:column; align-items:flex-start; gap:.6rem; }
+            footer { padding:1.2rem 1rem; margin: .75rem; font-size:0.9rem; }
+
+            /* Dashboard */
             .card { 
                 padding: 1.25rem;
-                background: rgba(255,255,255,0.5); /* MAIS TRANSPARENTE NO MOBILE */
+                background: rgba(255,255,255,0.5);
             }
             .card-title { font-size: 1.4rem; }
-            
-            /* Dashboard Stats - 2x2 NO MOBILE */
             .stats-grid { 
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
-            .stat-card {
+            .stat-card-dash {
                 padding: 1.5rem 1rem;
-                background: rgba(255,255,255,0.6); /* MAIS TRANSPARENTE NO MOBILE */
+                background: rgba(255,255,255,0.6);
             }
-            .stat-icon {
-                font-size: 2.5rem;
-            }
-            .stat-number {
-                font-size: 1.8rem;
-            }
-            .stat-label {
-                font-size: 0.85rem;
-            }
+            .stat-number { font-size: 1.8rem; }
 
-            /* Recompensas - 2x2 NO MOBILE */
             .grid-3 { 
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
-
-            /* Produtos - 2x2 NO MOBILE */
             .grid-4 { 
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
-            
-            .product-card {
-                padding: 1rem;
-                background: rgba(255,255,255,0.6); /* MAIS TRANSPARENTE NO MOBILE */
-            }
-
-            .reward-card {
-                padding: 1rem;
-                background: rgba(255,255,255,0.6); /* MAIS TRANSPARENTE NO MOBILE */
-            }
-
-            .reward-icon {
-                font-size: 2.5rem;
-            }
-
-            .reward-title {
-                font-size: 1rem;
-            }
-
-            .product-image {
-                height: 120px;
-                font-size: 2.5rem;
-                background: rgba(232,245,232,0.4); /* MAIS TRANSPARENTE NO MOBILE */
-            }
-
-            .product-name {
-                font-size: 0.95rem;
-            }
-
+            .product-card, .reward-card { padding: 1rem; background: rgba(255,255,255,0.6); }
+            .reward-icon { font-size: 2.5rem; }
+            .product-image { height: 120px; font-size: 2.5rem; background: rgba(232,245,232,0.4); }
             .grid-2 { grid-template-columns: 1fr; }
-            
             .profile-header { 
                 flex-direction: column; 
                 text-align: center;
-                background: rgba(76,175,80,0.75); /* MAIS TRANSPARENTE NO MOBILE */
+                background: rgba(76,175,80,0.75);
             }
-            
-            .points-display {
-                background: rgba(76,175,80,0.75); /* MAIS TRANSPARENTE NO MOBILE */
-            }
-
+            .points-display { background: rgba(76,175,80,0.75); }
             .points-number { font-size: 2.5rem; }
-            
             .badge-grid { grid-template-columns: repeat(3, 1fr); }
-            
-            .badge-item {
-                background: rgba(255,255,255,0.5); /* MAIS TRANSPARENTE NO MOBILE */
-            }
-
-            .tabs { 
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .tab {
-                white-space: nowrap;
-                padding: 0.75rem 1rem;
-            }
-            
-            .ranking-item {
-                flex-wrap: wrap;
-                background: rgba(255,255,255,0.5); /* MAIS TRANSPARENTE NO MOBILE */
-            }
-            
-            .ranking-badge {
-                margin-top: 0.5rem;
-                width: 100%;
-                text-align: center;
-            }
-
-            .table {
-                background: rgba(255,255,255,0.5); /* MAIS TRANSPARENTE NO MOBILE */
-            }
-
-            .table th {
-                background: rgba(232,245,232,0.6); /* MAIS TRANSPARENTE NO MOBILE */
-            }
+            .badge-item { background: rgba(255,255,255,0.5); }
+            .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .tab { white-space: nowrap; padding: 0.75rem 1rem; }
+            .ranking-item { flex-wrap: wrap; background: rgba(255,255,255,0.5); }
+            .ranking-badge { margin-top: 0.5rem; width: 100%; text-align: center; }
+            .table { background: rgba(255,255,255,0.5); }
         }
 
         @media (max-width: 480px) {
+            .hero-text h1 { font-size:1.6rem; }
+            .section-title h2 { font-size:1.4rem; }
+            .floating-icons { grid-template-columns: repeat(2,1fr); gap:.6rem; }
+
             .card-title { font-size: 1.2rem; }
             .btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
             
-            /* Stats continuam 2x2 em telas muito pequenas */
-            .stats-grid { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.75rem;
-            }
-            
-            .stat-card {
-                padding: 1.25rem 0.75rem;
-            }
-            
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .stat-card-dash { padding: 1.25rem 0.75rem; }
             .stat-number { font-size: 1.5rem; }
             .stat-icon { font-size: 2rem; }
             .stat-label { font-size: 0.8rem; }
 
-            /* Recompensas e Produtos continuam 2x2 */
-            .grid-3,
-            .grid-4 { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.75rem;
-            }
-
-            .reward-card,
-            .product-card {
-                padding: 0.85rem;
-            }
-
-            .reward-icon {
-                font-size: 2rem;
-            }
-
-            .product-image {
-                height: 100px;
-                font-size: 2rem;
-            }
-
+            .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .reward-card, .product-card { padding: 0.85rem; }
+            .reward-icon { font-size: 2rem; }
+            .product-image { height: 100px; font-size: 2rem; }
             .points-number { font-size: 2rem; }
             .modal-content { padding: 1.5rem; }
         }
+        
+        /* Animações (Mantidas) */
+        @keyframes slideInLeft { from{opacity:0; transform:translateX(-40px)} to{opacity:1; transform:translateX(0)} }
+        @keyframes slideInRight{ from{opacity:0; transform:translateX(40px)} to{opacity:1; transform:translateX(0)} }
+        @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
 
-        html { scroll-behavior: smooth; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -924,17 +706,77 @@
             </button>
 
             <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#about">Sobre</a></li>
                 <li><a href="#dashboard">Dashboard</a></li>
                 <li><a href="#ranking">Ranking</a></li>
-                <li><a href="#recompensas">Recompensas</a></li>
-                <li><a href="#produtos">Produtos</a></li>
-                <li><a href="#perfil">Perfil</a></li>
+                <li><a href="#calculadora">Calculadora</a></li>
+                <li><a href="#perfil">Meu Perfil</a></li>
+                <li><a href="#contact">Contato</a></li>
             </ul>
         </nav>
     </header>
 
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Eco Troca Verde Tech</h1>
+                <p>Startup de impacto socioambiental e tecnológico que integra soluções digitais e presenciais para promover gestão inteligente de resíduos sólidos, educação ambiental e inclusão financeira sustentável na comunidade São Remo.</p>
+                <button class="cta-button" data-scroll-target="#about">Saiba Mais →</button>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-icons">
+                    <div class="icon-card"><span class="icon">♻️</span><p>Reciclagem</p></div>
+                    <div class="icon-card"><span class="icon">💳</span><p>Inclusão Financeira</p></div>
+                    <div class="icon-card"><span class="icon">📱</span><p>Tecnologia</p></div>
+                    <div class="icon-card"><span class="icon">🌱</span><p>Sustentável</p></div>
+                    <div class="icon-card"><span class="icon">👥</span><p>Comunidade</p></div>
+                    <div class="icon-card"><span class="icon">🎮</span><p>Gamificação</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-title"><h2>Sobre o Projeto</h2><p>Uma iniciativa sustentável que nasce do coração da comunidade São Remo</p></div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>A <strong>Eco Troca Verde Tech</strong> nasceu na comunidade São Remo, localizada na zona oeste de São Paulo, com o propósito de transformar o descarte irregular de resíduos sólidos urbanos em uma oportunidade de inovação social, geração de renda e desenvolvimento local.</p>
+                <p>Utilizamos tecnologia, gamificação e microfinanças verdes para engajar os moradores na separação correta dos resíduos, recompensando suas ações com créditos digitais que podem ser convertidos em produtos, PIX, cartas de crédito ou até microempréstimos com juros reduzidos.</p>
+                <p>Nosso modelo de economia circular comunitária estimula hábitos sustentáveis, educação ambiental e inclusão financeira, com expansão gradual para bairros vizinhos, fortalecendo a rede de coleta e conscientização regional.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card-inst"><span class="stat-number-inst">1ª</span><p>Comunidade piloto: São Remo</p></div>
+                <div class="stat-card-inst"><span class="stat-number-inst">3</span><p>Pilares: Tecnologia, Educação e Inclusão</p></div>
+                <div class="stat-card-inst"><span class="stat-number-inst">1</span><p>Solução integrada e inovadora</p></div>
+                <div class="stat-card-inst"><span class="stat-number-inst">100%</span><p>Comprometimento com a comunidade</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="objectives">
+        <div class="section-title"><h2>Nossos Objetivos</h2><p>Metas claras para transformação social e ambiental</p></div>
+        <div class="objectives-grid">
+            <div class="objective-card"><span class="icon">🎓</span><h3>Educação Ambiental</h3><p>Conscientizar os moradores sobre a importância da reciclagem e a correta separação dos resíduos sólidos urbanos.</p></div>
+            <div class="objective-card"><span class="icon">💳</span><h3>Inclusão Financeira</h3><p>Promover acesso a créditos digitais, PIX, cartas de crédito e microempréstimos com juros reduzidos através da reciclagem.</p></div>
+            <div class="objective-card"><span class="icon">🎮</span><h3>Gamificação e Tecnologia</h3><p>Utilizar plataforma digital com sistema de pontuação e recompensas para engajar e motivar a participação ativa.</p></div>
+            <div class="objective-card"><span class="icon">🔄</span><h3>Economia Circular</h3><p>Consolidar um modelo de economia circular comunitária que gere renda e desenvolvimento local sustentável.</p></div>
+            <div class="objective-card"><span class="icon">🤝</span><h3>Parcerias Estratégicas</h3><p>Desenvolver colaborações com estabelecimentos comerciais, cooperativas e órgãos públicos para fortalecer a rede.</p></div>
+            <div class="objective-card"><span class="icon">🌍</span><h3>Expansão Regional</h3><p>Implementar na São Remo com expansão gradual para bairros vizinhos, fortalecendo a conscientização regional.</p></div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="section-title"><h2>Nossa Equipe</h2><p>Profissionais dedicados à transformação social e ambiental</p></div>
+        <div class="team-grid">
+            <div class="team-card"><div class="avatar">AK</div><h3>Alexey Kanashiro Andrade</h3><p>Idealizador e Coordenador Geral</p><small>Responsável pela visão estratégica e coordenação do projeto</small></div>
+            <div class="team-card"><div class="avatar">AR</div><h3>Arthur Paes Teodoro dos Reis Brito</h3><p>Sistemas e Gamificação</p><small>Desenvolvimento do sistema de recompensas e estratégias de engajamento</small></div>
+            <div class="team-card"><div class="avatar">OM</div><h3>Olavo Marcos da Silva Junior</h3><p>Pesquisa e Comunidade</p><small>Pesquisa de campo, contato comunitário e análise de dados</small></div>
+            <div class="team-card"><div class="avatar">LH</div><h3>Lucas Henrique de Oliveira Assis</h3><p>Comunicação e Parcerias</p><small>Plano de comunicação, marketing local e desenvolvimento de parcerias</small></div>
+        </div>
+    </section>
+
     <div class="main-container">
-        <!-- Dashboard -->
         <section id="dashboard">
             <div class="card">
                 <div class="card-header">
@@ -945,22 +787,22 @@
                 </div>
 
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card-dash">
                         <div class="stat-icon">👥</div>
                         <span class="stat-number" id="totalUsers">152</span>
                         <span class="stat-label">Usuários Ativos</span>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card-dash">
                         <div class="stat-icon">♻️</div>
                         <span class="stat-number" id="totalRecycled">3.456</span>
                         <span class="stat-label">Kg Reciclados</span>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card-dash">
                         <div class="stat-icon">🎁</div>
                         <span class="stat-number" id="totalRewards">89</span>
                         <span class="stat-label">Recompensas Entregues</span>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card-dash">
                         <div class="stat-icon">💰</div>
                         <span class="stat-number" id="totalPoints">48.750</span>
                         <span class="stat-label">Pontos Distribuídos</span>
@@ -1003,7 +845,6 @@
             </div>
         </section>
 
-        <!-- Ranking -->
         <section id="ranking">
             <div class="card">
                 <div class="card-header">
@@ -1015,12 +856,62 @@
                     </select>
                 </div>
                 <ul class="ranking-list" id="rankingList">
-                    <!-- Ranking items serão inseridos aqui -->
-                </ul>
+                    </ul>
             </div>
         </section>
 
-        <!-- Recompensas -->
+        <section id="calculadora">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🧮 Calculadora de Pontos</h2>
+                    <button class="btn btn-outline btn-small" onclick="limparCalculadora()">🔄 Limpar</button>
+                </div>
+
+                <div class="grid grid-2">
+                    <div>
+                        <h3 style="color: #2E7D32; margin-bottom: 1rem;">Adicionar Itens</h3>
+                        <form onsubmit="adicionarItemCalculadora(event)" style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                            <div class="form-group">
+                                <label class="form-label">Tipo de Material</label>
+                                <select class="form-control" id="calcProduto" required>
+                                    <option value="">Escolha um material...</option>
+                                    <option value="plastico">♻️ Plástico</option>
+                                    <option value="papel">📄 Papel</option>
+                                    <option value="metal">🔩 Metal</option>
+                                    <option value="vidro">🍾 Vidro</option>
+                                    <option value="eletronico">💻 Eletrônico</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Quantidade (kg)</label>
+                                <input type="number" step="0.1" min="0.1" class="form-control" id="calcQuantidade" placeholder="Ex: 2.5" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">🧮 Calcular Pontos</button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #2E7D32; margin-bottom: 1rem;">Resumo do Cálculo</h3>
+                        <div style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; backdrop-filter: blur(10px); min-height: 200px;">
+                            <div id="calcItens" style="margin-bottom: 1rem; max-height: 250px; overflow-y: auto;">
+                                <p style="text-align: center; color: #999; padding: 2rem 0;">Nenhum item adicionado ainda</p>
+                            </div>
+                            <div style="border-top: 2px solid rgba(76,175,80,0.3); padding-top: 1rem; margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-weight: 600; color: #666;">Total de Peso:</span>
+                                    <span style="font-weight: bold; color: #2E7D32;" id="calcTotalPeso">0 kg</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(76,175,80,0.2), rgba(129,199,132,0.2)); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                    <span style="font-weight: 600; color: #2E7D32; font-size: 1.1rem;">Total de Pontos:</span>
+                                    <span style="font-weight: bold; color: #FF6B35; font-size: 1.5rem;" id="calcTotalPontos">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="recompensas">
             <div class="card">
                 <div class="card-header">
@@ -1031,12 +922,10 @@
                 </div>
 
                 <div class="grid grid-3" id="rewardsList">
-                    <!-- Rewards serão inseridos aqui -->
-                </div>
+                    </div>
             </div>
         </section>
 
-        <!-- Produtos Recicláveis -->
         <section id="produtos">
             <div class="card">
                 <div class="card-header">
@@ -1055,12 +944,10 @@
                 </div>
 
                 <div id="produtosContent" class="grid grid-4">
-                    <!-- Produtos serão inseridos aqui -->
-                </div>
+                    </div>
             </div>
         </section>
 
-        <!-- Perfil do Usuário -->
         <section id="perfil">
             <div class="card">
                 <div class="profile-header">
@@ -1082,8 +969,7 @@
 
                 <h3 style="margin-bottom: 1rem; color: #2E7D32;">🏅 Conquistas</h3>
                 <div class="badge-grid" id="badgesList">
-                    <!-- Badges serão inseridos aqui -->
-                </div>
+                    </div>
 
                 <h3 style="margin: 2rem 0 1rem; color: #2E7D32;">📊 Meu Histórico</h3>
                 <div class="table-container">
@@ -1117,8 +1003,24 @@
             </div>
         </section>
     </div>
+    
+    <section id="contact" class="contact-section">
+        <div class="contact-content">
+            <div class="section-title"><h2 style="color:#2E7D32;">Fale Conosco</h2><p>Interessado em conhecer mais sobre o projeto ou formar parcerias?</p></div>
+            <div class="contact-info">
+                <div class="contact-item"><span>📍</span><span>Comunidade São Remo - Butantã - Zona Oeste - São Paulo, SP</span></div>
+                <div class="contact-item"><span>📧</span><span>alexey.andrade@gmail.com</span></div>
+                <div class="contact-item"><span>📱</span><span>(17) 98146-6059</span></div>
+            </div>
+            <button class="cta-button" data-contact-action="true" style="margin-top:1rem;">Entrar em Contato ✉️</button>
+        </div>
+    </section>
 
-    <!-- Modal Cadastro Usuário -->
+    <footer>
+        <p>&copy; 2025 Eco Troca Verde Tech - Startup de Impacto Socioambiental e Tecnológico</p>
+        <p>Transformando a comunidade São Remo através da sustentabilidade e inclusão financeira</p>
+    </footer>
+
     <div class="modal" id="cadastroModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1151,7 +1053,6 @@
         </div>
     </div>
 
-    <!-- Modal Adicionar Recompensa -->
     <div class="modal" id="recompensaModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1180,7 +1081,6 @@
         </div>
     </div>
 
-    <!-- Modal Adicionar Produto -->
     <div class="modal" id="produtoModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1219,11 +1119,10 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
 
     <script>
-        // Dados de exemplo
+        // --- DADOS DE EXEMPLO ---
         let users = [
             { id: 1, name: "Maria Silva", points: 3500, recycled: 45.2, level: 6 },
             { id: 2, name: "João Santos", points: 2800, recycled: 38.5, level: 5 },
@@ -1272,14 +1171,60 @@
         ];
 
         let currentCategory = 'plastico';
+        let calculatorItems = []; // Itens da calculadora
 
-        // Inicialização
+        // --- INICIALIZAÇÃO E SCROLL ---
         document.addEventListener('DOMContentLoaded', function() {
             updateDashboard();
             renderRanking();
             renderRewards();
             renderProducts(currentCategory);
             renderBadges();
+            renderCalculatorSummary(); // Inicializa a calculadora
+
+            // Observador para animação de cards institucionais
+            const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.objective-card, .team-card, .stat-card-inst').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // Smooth scroll para os links de navegação
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // fecha menu mobile se estiver aberto
+                const nav = document.getElementById('mainNav');
+                if (nav.classList.contains('mobile-open')) {
+                    nav.classList.remove('mobile-open');
+                    document.getElementById('menuToggle').classList.remove('active');
+                }
+            });
+        });
+
+        // CTA button actions (Home e Contato)
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.getAttribute('data-scroll-target')) {
+                    const target = document.querySelector(this.getAttribute('data-scroll-target'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                } else if (this.getAttribute('data-contact-action')) {
+                    alert('Funcionalidade de contato será implementada em breve!');
+                }
+            });
         });
 
         // Menu mobile
@@ -1297,20 +1242,18 @@
                 menuToggle.classList.remove('active');
             }
         });
-
-        // Smooth scroll
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                const nav = document.getElementById('mainNav');
-                if (nav.classList.contains('mobile-open')) {
-                    nav.classList.remove('mobile-open');
-                    document.getElementById('menuToggle').classList.remove('active');
-                }
-            });
+        
+        // Header transparente ao scroll (Otimizado para o estilo do Dashboard)
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'linear-gradient(135deg, rgba(45,134,89,0.98), rgba(76,175,80,0.95))';
+            } else {
+                header.style.background = 'linear-gradient(135deg, rgba(45,134,89,0.95), rgba(76,175,80,0.9))';
+            }
         });
+
+        // --- FUNÇÕES DA PLATAFORMA ---
 
         // Dashboard
         function updateDashboard() {
@@ -1402,7 +1345,7 @@
         }
 
         function changeTab(category, event) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tabs .tab').forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
             currentCategory = category;
             renderProducts(category);
@@ -1525,16 +1468,6 @@
             }, 3000);
         }
 
-        // Header transparente ao scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'linear-gradient(135deg, rgba(45,134,89,0.98), rgba(76,175,80,0.95))';
-            } else {
-                header.style.background = 'linear-gradient(135deg, rgba(45,134,89,0.95), rgba(76,175,80,0.9))';
-            }
-        });
-
         // Atualizar estatísticas dinamicamente
         setInterval(() => {
             const totalRecycled = document.getElementById('totalRecycled');
@@ -1542,63 +1475,83 @@
             const newValue = (currentValue + Math.random() * 0.5).toFixed(1);
             totalRecycled.textContent = newValue;
         }, 5000);
+
+        // --- FUNÇÕES DA CALCULADORA ---
+        
+        // Mapeamento de pontos por categoria (simplificado, pois o original usava um produto específico)
+        const pointsPerKg = {
+            'plastico': 100, // Exemplo: 100 pontos por kg de plástico
+            'papel': 150,    // Exemplo: 150 pontos por kg de papel
+            'metal': 200,    // Exemplo: 200 pontos por kg de metal
+            'vidro': 50,     // Exemplo: 50 pontos por kg de vidro
+            'eletronico': 500 // Exemplo: 500 pontos por kg de eletrônico
+        };
+
+        function adicionarItemCalculadora(event) {
+            event.preventDefault();
+            const material = document.getElementById('calcProduto').value;
+            const quantidade = parseFloat(document.getElementById('calcQuantidade').value);
+            
+            if (!material || isNaN(quantidade) || quantidade <= 0) {
+                showToast("Por favor, selecione um material e insira uma quantidade válida.");
+                return;
+            }
+
+            const materialLabel = document.getElementById('calcProduto').options[document.getElementById('calcProduto').selectedIndex].text;
+            const pontosPorKg = pointsPerKg[material] || 0;
+            const pontosCalculados = Math.round(quantidade * pontosPorKg);
+
+            const newItem = {
+                material: materialLabel,
+                kg: quantidade,
+                pontos: pontosCalculados
+            };
+
+            calculatorItems.push(newItem);
+            renderCalculatorSummary();
+            showToast(`Adicionado: ${quantidade} kg de ${materialLabel} (+${pontosCalculados} pts)`);
+            
+            // Limpa o formulário após adicionar (opcional)
+            document.getElementById('calcProduto').value = "";
+            document.getElementById('calcQuantidade').value = "";
+        }
+
+        function renderCalculatorSummary() {
+            const calcItensDiv = document.getElementById('calcItens');
+            const calcTotalPesoSpan = document.getElementById('calcTotalPeso');
+            const calcTotalPontosSpan = document.getElementById('calcTotalPontos');
+            
+            let totalPeso = 0;
+            let totalPontos = 0;
+            
+            calcItensDiv.innerHTML = '';
+
+            if (calculatorItems.length === 0) {
+                calcItensDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem 0;">Nenhum item adicionado ainda</p>';
+            } else {
+                calculatorItems.forEach((item, index) => {
+                    totalPeso += item.kg;
+                    totalPontos += item.pontos;
+                    
+                    const itemDiv = document.createElement('div');
+                    itemDiv.style.cssText = 'display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed rgba(0,0,0,0.1);';
+                    itemDiv.innerHTML = `
+                        <span style="color: #666;">${item.material} (${item.kg.toFixed(1)} kg)</span>
+                        <span style="font-weight: bold; color: #4CAF50;">+${item.pontos}</span>
+                    `;
+                    calcItensDiv.appendChild(itemDiv);
+                });
+            }
+
+            calcTotalPesoSpan.textContent = `${totalPeso.toFixed(1)} kg`;
+            calcTotalPontosSpan.textContent = totalPontos.toLocaleString();
+        }
+
+        function limparCalculadora() {
+            calculatorItems = [];
+            renderCalculatorSummary();
+            showToast("Calculadora limpa! 🔄");
+        }
     </script>
-
-        <!-- Calculadora de Pontos -->
-        <section id="calculadora">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">🧮 Calculadora de Pontos</h2>
-                    <button class="btn btn-outline btn-small" onclick="limparCalculadora()">🔄 Limpar</button>
-                </div>
-
-                <div class="grid grid-2">
-                    <div>
-                        <h3 style="color: #2E7D32; margin-bottom: 1rem;">Adicionar Itens</h3>
-                        <form onsubmit="adicionarItemCalculadora(event)" style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; backdrop-filter: blur(10px);">
-                            <div class="form-group">
-                                <label class="form-label">Tipo de Material</label>
-                                <select class="form-control" id="calcProduto" required>
-                                    <option value="">Escolha um material...</option>
-                                    <option value="plastico">♻️ Plástico</option>
-                                    <option value="papel">📄 Papel</option>
-                                    <option value="metal">🔩 Metal</option>
-                                    <option value="vidro">🍾 Vidro</option>
-                                    <option value="eletronico">💻 Eletrônico</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Quantidade (kg)</label>
-                                <input type="number" step="0.1" min="0.1" class="form-control" id="calcQuantidade" placeholder="Ex: 2.5" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">🧮 Calcular Pontos</button>
-                        </form>
-                    </div>
-
-                    <div>
-                        <h3 style="color: #2E7D32; margin-bottom: 1rem;">Resumo do Cálculo</h3>
-                        <div style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; backdrop-filter: blur(10px); min-height: 200px;">
-                            <div id="calcItens" style="margin-bottom: 1rem; max-height: 250px; overflow-y: auto;">
-                                <p style="text-align: center; color: #999; padding: 2rem 0;">Nenhum item adicionado ainda</p>
-                            </div>
-                            <div style="border-top: 2px solid rgba(76,175,80,0.3); padding-top: 1rem; margin-top: 1rem;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                    <span style="font-weight: 600; color: #666;">Total de Peso:</span>
-                                    <span style="font-weight: bold; color: #2E7D32;" id="calcTotalPeso">0 kg</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(76,175,80,0.2), rgba(129,199,132,0.2)); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                                    <span style="font-weight: 600; color: #2E7D32; font-size: 1.1rem;">Total de Pontos:</span>
-                                    <span style="font-weight: bold; color: #FF6B35; font-size: 1.5rem;" id="calcTotalPontos">0</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Produtos Recicláveis -->
-        <section id="produtos">
 </body>
 </html>
-
